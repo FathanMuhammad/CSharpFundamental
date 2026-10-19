@@ -169,4 +169,81 @@ public class Asynchronus
 
         return 12;
     }
+
+    public static async Task Cancellation()
+    {
+        /*
+         * Cancellation, membatalkan pekerjaan async yang sedang berjalan
+         * Contoh : user menekan tombol batal, atau prosers melebihi batas waktu\
+         * 
+         * CancellationTokenSource  > Pihak yang meminta pembatalan
+         * CancellationToken        > dikirim ke method, dipakai untuk memeriksa permintaan batal
+         * 
+         * Pembatalan itu bersifat kerja sama, task tidak akan dihentikan paksa
+         * Method yang menerimma token harus memeriksa token itu sendiri
+         */
+
+
+        // #1 Cancellation Manual
+        CancellationTokenSource cts = new CancellationTokenSource();
+        Task payrollTask = ProcessPayrollAsync(10, cts.Token);
+
+
+        await Task.Delay(1200, cts.Token);
+        Console.WriteLine($"Permintaan pembatalan");
+        cts.Cancel();
+
+        try
+        {
+            await payrollTask;
+        }
+        catch (OperationCanceledException ex)
+        {
+            Console.WriteLine($"Prosess payroll dibatalkan: {ex.Message}");
+        }
+
+        Console.WriteLine($"Status : {payrollTask.Status}");
+        cts.Dispose();
+        Console.WriteLine();
+
+        // #2 CancelAfter, batal otomatis setelah batas waktu (timeout)
+        CancellationTokenSource cts2 = new CancellationTokenSource();
+        cts2.CancelAfter(1200);
+
+        try
+        {
+            await ProcessPayrollAsync(10, cts2.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            Console.WriteLine($"Process payroll melebihi batas waktu 1200ms");
+        }
+        finally
+        {
+            cts2.Dispose();
+            Console.WriteLine();
+        }
+
+        // #3 tidakdibatalkan, prosess berjalan sampai selesai
+        CancellationTokenSource cts3 = new CancellationTokenSource();
+        await ProcessPayrollAsync(10, cts3.Token);
+        Console.WriteLine($"Prosess payroll selesai");
+        cts3.Dispose();
+    }
+
+    public static async Task ProcessPayrollAsync(int totalEmployees, CancellationToken cancellationToken)
+    {
+        for (int i = 0; i < totalEmployees; i++)
+        {
+            // melempar OperationCancelledException jika pembatalan sudah diminta
+            cancellationToken.ThrowIfCancellationRequested();
+
+            // Token diteruskan ke method asynchronus lain agar ikut dibatalkan
+            await Task.Delay(500, cancellationToken);
+
+            Console.WriteLine($"Payroll Employee Id: {i}");
+        }
+
+        
+    }
 }

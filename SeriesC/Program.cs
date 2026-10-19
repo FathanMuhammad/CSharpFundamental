@@ -45,5 +45,6 @@ internal class Program
 
         //Asynchronus.TaskClass();
         Asynchronus.AsyncAwait().Wait();
+        Asynchronus.Cancellation().Wait();
     }
 }
