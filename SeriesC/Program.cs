@@ -41,6 +41,9 @@ internal class Program
         //Console.WriteLine("=====Group Join======");
         //LinqQuery.GroupingJoining();
 
-        Multithread.ConcurrencyAndParallelism();
+        //Multithread.ConcurrencyAndParallelism();
+
+        //Asynchronus.TaskClass();
+        Asynchronus.AsyncAwait().Wait();
     }
 }
