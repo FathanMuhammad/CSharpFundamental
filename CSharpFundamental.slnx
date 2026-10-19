@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Practice-OOP-Perpustakaan/Practice-OOP-Perpustakaan.csproj" Id="e566218c-2028-4fd8-a2a5-166a56fdc17e" />
+  <Project Path="Practice/Practice.csproj" Id="18e56400-e036-4a8a-b262-da8e50ee4227" />
+  <Project Path="SeriesA/SeriesA.csproj" />
+  <Project Path="SeriesB/SeriesB.csproj" Id="6be5a33c-ff56-45d9-8a74-4b194daeef96" />
+  <Project Path="SeriesC/SeriesC.csproj" Id="3b67f03c-e384-48a1-933f-3207571b4597" />
+</Solution>
