@@ -2,6 +2,7 @@
 using SeriesC.BCollection;
 using SeriesC.CGenerics;
 using SeriesC.DLinq;
+using SeriesC.EAsynchronus;
 
 namespace SeriesC;
 
@@ -30,12 +31,16 @@ internal class Program
         //herul.Introduction();
         //rifqi.Introduction();
 
-        LinqQuery.Grouping();
 
-        Console.WriteLine("============");
-        LinqQuery.Joining();
+        // --- LINQ --- //
+        //LinqQuery.Grouping();
 
-        Console.WriteLine("===========");
-        LinqQuery.GroupingJoining();
+        //Console.WriteLine("============");
+        //LinqQuery.Joining();
+
+        //Console.WriteLine("=====Group Join======");
+        //LinqQuery.GroupingJoining();
+
+        Multithread.ConcurrencyAndParallelism();
     }
 }
